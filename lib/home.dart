@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Demo for moment_dart 0.9.0+1"),
+        title: const Text("Demo for moment_dart 0.10.1"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -60,12 +60,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _build(context) {
+    const Widget divider = SizedBox(height: 12.0);
+
     final MomentLocalization activeLocalization =
         MomentLocalizations.byLocale(activeLocale)!;
 
     final Moment now = Moment.now(localization: activeLocalization);
 
-    final List<SnippetEntry> formats = [
+    final List<SnippetEntry?> formats = [
+      SnippetEntry(
+        "final localization = MomentLocalizations.byLocale(\"$activeLocale\")!;",
+        now.localization.endonym,
+      ),
+      SnippetEntry(
+        "final now = Moment.now(localization: localization);",
+        "$now",
+      ),
+      null,
+      SnippetEntry(
+        r'now.format();',
+        now.format(),
+      ),
       SnippetEntry(
         r'now.format("YYYY MMMM Do - hh:mm:ssa");',
         now.format("YYYY MMMM Do - hh:mm:ssa"),
@@ -84,7 +99,7 @@ class _HomePageState extends State<HomePage> {
       ),
     ];
 
-    final List<SnippetEntry> relatives = [
+    final List<SnippetEntry?> relatives = [
       SnippetEntry(
         r"Moment(DateTime(2003,6,1)).fromNow();",
         Moment(DateTime(2003, 6, 1), localization: activeLocalization)
@@ -96,12 +111,27 @@ class _HomePageState extends State<HomePage> {
             .fromNow(),
       ),
       SnippetEntry(
-        r"Moment.now().lastMonday().fromNow();",
-        Moment.now(localization: activeLocalization).lastMonday().fromNow(),
+        r"Moment.now().lastMonday().fromNow(form: UnitStringForm.short);",
+        Moment.now(localization: activeLocalization)
+            .lastMonday()
+            .fromNow(form: UnitStringForm.short),
+      ),
+      null,
+      SnippetEntry(
+        r"Moment.now().subtract(const Duration(minutes: 2, seconds: 47)).fromNow();",
+        Moment.now(localization: activeLocalization)
+            .subtract(const Duration(minutes: 2, seconds: 47))
+            .fromNowPrecise(),
+      ),
+      SnippetEntry(
+        r"Moment.now().add(const Duration(days: 23)).fromNowPrecise(includeWeeks: true, form: UnitStringForm.mid);",
+        Moment.now(localization: activeLocalization)
+            .add(const Duration(days: 23))
+            .fromNowPrecise(includeWeeks: true, form: UnitStringForm.mid),
       ),
     ];
 
-    final List<SnippetEntry> calendar = [
+    final List<SnippetEntry?> calendar = [
       SnippetEntry(
         r"Moment.now().subtract(const Duration(days: 10)).calendar();",
         Moment.now(localization: activeLocalization)
@@ -195,20 +225,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Snippet(
-                entry: SnippetEntry(
-                  "final localization = MomentLocalizations.byLocale(\"$activeLocale\")!;",
-                  now.localization.endonym,
-                ),
-              ),
-              Snippet(
-                entry: SnippetEntry(
-                  "final now = Moment.now(localization: localization);",
-                  "$now",
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              for (final format in formats) Snippet(entry: format),
+              for (final entry in formats)
+                entry == null ? divider : Snippet(entry: entry),
             ],
           ),
         ),
@@ -221,7 +239,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (final relative in relatives) Snippet(entry: relative),
+              for (final entry in relatives)
+                entry == null ? divider : Snippet(entry: entry),
             ],
           ),
         ),
@@ -234,7 +253,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (final cal in calendar) Snippet(entry: cal),
+              for (final entry in calendar)
+                entry == null ? divider : Snippet(entry: entry),
             ],
           ),
         ),
