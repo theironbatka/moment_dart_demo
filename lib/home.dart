@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Demo for moment_dart 0.10.5"),
+        title: const Text("Demo for moment_dart 0.11.0"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
