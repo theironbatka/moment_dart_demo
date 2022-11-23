@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Demo for moment_dart 0.11.0"),
+        title: const Text("Demo for moment_dart 0.12.0"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -101,82 +101,95 @@ class _HomePageState extends State<HomePage> {
 
     final List<SnippetEntry?> relatives = [
       SnippetEntry(
-        r"Moment(DateTime(2003,6,1)).fromNow();",
-        Moment(DateTime(2003, 6, 1), localization: activeLocalization)
-            .fromNow(),
+        r"Moment(DateTime(2003,6,1)).fromNow(dropPrefixOrSuffix: true);",
+        Moment(
+          DateTime(2003, 6, 1),
+          localization: activeLocalization,
+        ).fromNow(dropPrefixOrSuffix: true),
       ),
       SnippetEntry(
-        r"Moment(DateTime(2012,12,21)).fromNow();",
-        Moment(DateTime(2012, 12, 21), localization: activeLocalization)
-            .fromNow(),
+        r"now.lastMonday().fromNow(form: UnitStringForm.short);",
+        now.lastMonday().fromNow(form: UnitStringForm.short),
       ),
       SnippetEntry(
-        r"Moment.now().lastMonday().fromNow(form: UnitStringForm.short);",
-        Moment.now(localization: activeLocalization)
-            .lastMonday()
+        r"Moment(DateTime(now.year,11,26)).fromNow(form: UnitStringForm.short);",
+        Moment(DateTime(now.year, 11, 26), localization: activeLocalization)
             .fromNow(form: UnitStringForm.short),
       ),
-      null,
+    ];
+
+    final List<SnippetEntry?> preciseDurations = [
       SnippetEntry(
-        r"Moment.now().subtract(const Duration(minutes: 2, seconds: 47)).fromNow();",
-        Moment.now(localization: activeLocalization)
-            .subtract(const Duration(minutes: 2, seconds: 47))
-            .fromNowPrecise(),
+        r"now.subtract(const Duration(minutes: 2, seconds: 47)).fromNow();",
+        now.subtract(const Duration(minutes: 2, seconds: 47)).fromNowPrecise(),
       ),
       SnippetEntry(
-        r"Moment.now().add(const Duration(days: 23)).fromNowPrecise(includeWeeks: true, form: UnitStringForm.mid);",
-        Moment.now(localization: activeLocalization)
+        r"now.add(const Duration(days: 23)).fromNowPrecise(includeWeeks: true, form: UnitStringForm.mid);",
+        now
             .add(const Duration(days: 23))
             .fromNowPrecise(includeWeeks: true, form: UnitStringForm.mid),
+      ),
+      SnippetEntry(
+        r"Duration(microseconds: now.microsecondsSinceEpoch)"
+        "\n"
+        ".toDurationString(activeLocalization);",
+        Duration(microseconds: now.microsecondsSinceEpoch)
+            .toDurationString(activeLocalization, format: DurationFormat.all),
+      ),
+      SnippetEntry(
+        r"Duration(microseconds: now.microsecondsSinceEpoch)"
+        "\n"
+        ".toDurationString(activeLocalization, form: UnitStringForm.mid);",
+        Duration(microseconds: now.microsecondsSinceEpoch).toDurationString(
+          activeLocalization,
+          format: DurationFormat.all,
+          form: UnitStringForm.mid,
+        ),
+      ),
+      SnippetEntry(
+        r"Duration(microseconds: now.microsecondsSinceEpoch)"
+        "\n"
+        ".toDurationString(activeLocalization, form: UnitStringForm.short);",
+        Duration(microseconds: now.microsecondsSinceEpoch).toDurationString(
+          activeLocalization,
+          format: DurationFormat.all,
+          form: UnitStringForm.short,
+        ),
       ),
     ];
 
     final List<SnippetEntry?> calendar = [
       SnippetEntry(
-        r"Moment.now().subtract(const Duration(days: 10)).calendar();",
-        Moment.now(localization: activeLocalization)
-            .subtract(const Duration(days: 10))
-            .calendar(),
+        r"now.subtract(const Duration(days: 10)).calendar();",
+        now.subtract(const Duration(days: 10)).calendar(),
       ),
       SnippetEntry(
-        r"Moment.now().subtract(const Duration(days: 6)).calendar();",
-        Moment.now(localization: activeLocalization)
-            .subtract(const Duration(days: 6))
-            .calendar(),
+        r"now.subtract(const Duration(days: 6)).calendar();",
+        now.subtract(const Duration(days: 6)).calendar(),
       ),
       SnippetEntry(
-        r"Moment.now().subtract(const Duration(days: 3)).calendar();",
-        Moment.now(localization: activeLocalization)
-            .subtract(const Duration(days: 3))
-            .calendar(),
+        r"now.subtract(const Duration(days: 3)).calendar();",
+        now.subtract(const Duration(days: 3)).calendar(),
       ),
       SnippetEntry(
-        r"Moment.now().subtract(const Duration(days: 1)).calendar();",
-        Moment.now(localization: activeLocalization)
-            .subtract(const Duration(days: 1))
-            .calendar(),
+        r"now.subtract(const Duration(days: 1)).calendar();",
+        now.subtract(const Duration(days: 1)).calendar(),
       ),
       SnippetEntry(
-        r"Moment.now().calendar();",
-        Moment.now(localization: activeLocalization).calendar(),
+        r"now.calendar();",
+        now.calendar(),
       ),
       SnippetEntry(
-        r"Moment.now().add(const Duration(days: 1)).calendar();",
-        Moment.now(localization: activeLocalization)
-            .add(const Duration(days: 1))
-            .calendar(),
+        r"now.add(const Duration(days: 1)).calendar();",
+        now.add(const Duration(days: 1)).calendar(),
       ),
       SnippetEntry(
-        r"Moment.now().add(const Duration(days: 3)).calendar();",
-        Moment.now(localization: activeLocalization)
-            .add(const Duration(days: 3))
-            .calendar(),
+        r"now.add(const Duration(days: 3)).calendar();",
+        now.add(const Duration(days: 3)).calendar(),
       ),
       SnippetEntry(
-        r"Moment.now().add(const Duration(days: 10)).calendar();",
-        Moment.now(localization: activeLocalization)
-            .add(const Duration(days: 10))
-            .calendar(),
+        r"now.add(const Duration(days: 10)).calendar();",
+        now.add(const Duration(days: 10)).calendar(),
       ),
     ];
 
@@ -240,6 +253,19 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               for (final entry in relatives)
+                entry == null ? divider : Snippet(entry: entry),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16.0),
+
+        // Precise duration
+        const Header(text: "Precise duration"),
+        Section(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final entry in preciseDurations)
                 entry == null ? divider : Snippet(entry: entry),
             ],
           ),
